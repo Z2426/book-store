@@ -16,12 +16,68 @@ app.get('/',(req,res)=>{
     console.log(req)
     return res.status(234).send('Welcome to MERN')
 })
+//Route for delete a book
+app.delete('/book/:id',async(req,res)=>{
+    try{
+        const {id} =req.params
+        const result =await Book.findByIdAndDelete(id)
+        if(!result){
+            return res.status(404).json({message:"Book not found"})
+        }
+        return res.status(200).send({
+            message:"Book deleted successfully"
+        })
+
+    }catch(e){
+        console.log(e.message)
+        res.status(500).send({message: e.meassage})
+    }
+})
+//Route for update a book
+app.put('/books/:id',async (req,res)=>{
+    try{
+        if(!req.body.title||
+            !req.body.author||
+            !req.body.publishYear){
+                return res.status(400).send({
+                    message:"send all require fileds : title ,author,pushlisher"
+                })
+            }
+        const {id}=req.params
+        const result =await Book.findByIdAndUpdate(id,req.body)
+        console.log(result)
+        if(!result){
+            return res.status(404).json({message:"Book not found"})
+        }
+   return res.status(200).send({meassage:"Book update sucessfully"})
+    }catch(e){
+        console.log(e.message)
+        res.status(500)
+    }
+})
+// Routes get by id
+app.get('/books/:id', async(req,res)=>{
+    try{
+        const {id} = req.params //? tai sao dung {id}
+
+      const book =await Book.findById(id)
+      console.log(book)
+      return res.status(200).json({book})
+    }catch(e){
+        console.log(e.message)
+        res.status(500).send({message: e.message})
+    }
+})
 //Roure  show all booj
 app.get('/books', async(req,res)=>{
     try{
       const books =await Book.find({})
       console.log(books)
-      return res.status(200).json(books)
+      return res.status(200).json({
+        count : books.length,
+        books: books
+
+      })
     }catch(e){
         console.log(e.message)
         res.status(500).send({message: e.message})
