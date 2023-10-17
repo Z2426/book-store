@@ -3,6 +3,7 @@ import {PORT,MongoDBURL} from "./config.js"
 import mongoose from 'mongoose'
 import { Book } from "./models/bookModel.js"
 import  router from "./routes/bookRoutes.js"
+import cors from 'cors';
 const app =express()
 mongoose.connect(MongoDBURL)
 .then(()=>{
@@ -13,6 +14,9 @@ mongoose.connect(MongoDBURL)
 })
 // parsing request body
 app.use(express.json())
+// CORS : C1  allow method default  ò cros
+app.use(cors())
+//
 app.get('/',(req,res)=>{
     console.log(req)
     return res.status(234).send('Welcome to MERN')

@@ -60,7 +60,6 @@ router.get('/', async(req,res)=>{
       const books =await Book.find({})
       console.log(books)
       return res.status(200).json({
-        count : books.length,
         books: books
 
       })
