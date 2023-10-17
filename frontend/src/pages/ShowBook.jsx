@@ -20,7 +20,7 @@ const showBook =()=>{
     },[])
     return(
         <div  className='p-4'>
-            
+            <BackButton/>
             <h1 className='text-3xl  my-4'>Show Book</h1>
             {loading ?(
                 <Spinner/>
@@ -40,8 +40,10 @@ const showBook =()=>{
                     </div>
                     <div className='my-4'>
                         <span className='text-xl  mr-4' text-gray-500>Publish Year</span>
-                        <span>{book.publishYear}</span>
+                        <span>{book.pushlishYear}</span>
                     </div>
+                   
+                    
                     
 
                 </div>
